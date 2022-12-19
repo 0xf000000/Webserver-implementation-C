@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3570CAF1295121BF00A78963 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAF0295121BF00A78963 /* main.c */; };
+		3570CAF9295121E700A78963 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAF8295121E700A78963 /* net.c */; };
+		3570CAFC2951223700A78963 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAFB2951223700A78963 /* file.c */; };
+		3570CAFF2951227600A78963 /* MIME.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAFE2951227600A78963 /* MIME.c */; };
+		3570CB02295122A400A78963 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CB01295122A400A78963 /* list.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,14 @@
 /* Begin PBXFileReference section */
 		3570CAED295121BF00A78963 /* WebserverC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WebserverC; sourceTree = BUILT_PRODUCTS_DIR; };
 		3570CAF0295121BF00A78963 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		3570CAF7295121E700A78963 /* net.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = net.h; sourceTree = "<group>"; };
+		3570CAF8295121E700A78963 /* net.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = net.c; sourceTree = "<group>"; };
+		3570CAFA2951223700A78963 /* file.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
+		3570CAFB2951223700A78963 /* file.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file.c; sourceTree = "<group>"; };
+		3570CAFD2951227600A78963 /* MIME.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIME.h; sourceTree = "<group>"; };
+		3570CAFE2951227600A78963 /* MIME.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MIME.c; sourceTree = "<group>"; };
+		3570CB00295122A400A78963 /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		3570CB01295122A400A78963 /* list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +69,15 @@
 		3570CAEF295121BF00A78963 /* WebserverC */ = {
 			isa = PBXGroup;
 			children = (
+				3570CAFA2951223700A78963 /* file.h */,
+				3570CAFB2951223700A78963 /* file.c */,
 				3570CAF0295121BF00A78963 /* main.c */,
+				3570CAF7295121E700A78963 /* net.h */,
+				3570CAF8295121E700A78963 /* net.c */,
+				3570CAFD2951227600A78963 /* MIME.h */,
+				3570CAFE2951227600A78963 /* MIME.c */,
+				3570CB00295122A400A78963 /* list.h */,
+				3570CB01295122A400A78963 /* list.c */,
 			);
 			path = WebserverC;
 			sourceTree = "<group>";
@@ -119,7 +139,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3570CB02295122A400A78963 /* list.c in Sources */,
 				3570CAF1295121BF00A78963 /* main.c in Sources */,
+				3570CAF9295121E700A78963 /* net.c in Sources */,
+				3570CAFC2951223700A78963 /* file.c in Sources */,
+				3570CAFF2951227600A78963 /* MIME.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
