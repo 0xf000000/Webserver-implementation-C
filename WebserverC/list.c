@@ -8,42 +8,22 @@
 #include <stdlib.h>
 #include "list.h"
 
-/**
- just a function to test things
- */
-struct node* buildOnetwoThree(){
-    
-    struct node* head = malloc(sizeof(struct node));
-    struct node* second = malloc(sizeof(struct node));
-    struct node* third = malloc(sizeof(struct node));
-    
-    head -> next = second;
-    head -> data = 1;
-    
-    second -> next = third;
-    third -> next = NULL;
-    
-    
-    
-    
-    
-    return head;
-}
 
 
-struct node* createList(int data){
-    struct node* HEAD = malloc(sizeof(struct node));
+
+struct list* createList(void){
     
-    HEAD -> data = data;
-    HEAD -> next = NULL;
+    struct list* list = calloc(1 , sizeof(struct list));
     
-    return HEAD;
+    
+    return list;
     
 }
 
 /*
- basically we have a pointer which is pointing to our head node,
+ basically we have a pointer that refers to a pointer which is pointing to our head node,
  we insert our newNode and make it the
+ Items will apear in reverse order as they been put in
  */
 void Push (struct node **headRef, int data) {
     struct node* newNode = malloc(sizeof(struct node));
@@ -52,6 +32,54 @@ void Push (struct node **headRef, int data) {
     newNode -> next = *headRef;
     
     *headRef = newNode;
+    
+}
+
+/*
+ appending a node to the end of our list
+ */
+void appendNode(struct node **HEAD, int data){
+    
+    struct node *current = *HEAD;
+    struct node *newNode = malloc(sizeof(struct node));
+    
+    newNode -> data = data;
+    newNode -> next = NULL;
+    
+    // if there is only a head node we need to reference a pointer
+    if(current -> next == NULL){
+        
+        current -> next = *HEAD;
+        
+    }else{
+        
+        // remember the
+        while(current -> next != NULL){
+            current = current -> next;
+        }
+        
+        current -> next = newNode;
+        
+       
+        
+    }
+    
+    // returns the first data that got inserted
+    
+}
+
+void *list_head(struct node *list){
+    
+    if(list -> data == 0 || list -> next == NULL){
+        return NULL;
+    }
+    
+    
+    
+    
+    
+    
+    return list -> data;
     
 }
 

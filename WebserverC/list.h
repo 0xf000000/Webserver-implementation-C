@@ -8,13 +8,23 @@
 #ifndef list_h
 #define list_h
 
+
+
 struct node{
     int data;
     struct node *next;
 };
 
-struct node* createList(int data);
+struct list{
+    struct node *head;
+    int count;
+    
+};
+
+struct list* createList(void);
 void Push (struct node **headRef, int data);
+extern void appendNode(struct node **HEAD, int data);
+extern void *list_head(struct node *list);
 
 
 
