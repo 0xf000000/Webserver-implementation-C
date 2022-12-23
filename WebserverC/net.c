@@ -37,7 +37,7 @@ void *getInetAdress(struct sockaddr *sa){
  */
 
 int get_socket(char *port){
-    int sockfd;
+    int sockfd = 0;
     struct addrinfo hints, *servinfo, *p;
     int rv;
     int yes = 1;
