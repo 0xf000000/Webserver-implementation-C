@@ -66,7 +66,7 @@ void appendNode(struct list *list, int data){
     
     else{
         
-        // remember the
+        
         while(current -> next != NULL){
             current = current -> next;
         }
@@ -144,4 +144,167 @@ int getListTail(struct list *list){
         return current -> data;
     }
 }
+
+
+
+int** listToArray(struct list* mylist ){
+   
+    if(mylist -> head == NULL){
+        return 0;
+    }
+    
+    // allocate a array for the size of your list
+    int** a = malloc(Listlength(mylist) * sizeof(int));
+    
+    
+    struct node* current  = mylist -> head;
+    int i;
+    for(i = 0; current != NULL; i ++,current = current-> next ){
+        
+        
+        *a[i] = current -> data;
+        
+    }
+    
+    
+    *a[i] = 0;
+    
+    
+    
+    return a;
+}
+
+
+void freeArray(int** array){
+    
+    free(array);
+    
+}
+
+
+
+void destroyList(struct list *mylist){
+    
+    struct node *current = mylist -> head, *next;
+    
+    while(current != NULL){
+        
+        next = current -> next;
+        
+        free(current);
+        
+    }
+    
+    free(mylist);
+    
+}
+
+/*
+ runns a function for each node
+ TODO: needs to be changed so it takes a void pointer
+ */
+
+void foreachNode(struct list* list, void (*f)(int,void*), void *args){
+    
+    struct node* current = list -> head;
+    
+    while(current != NULL){
+        
+        f( current -> data, args);
+        
+        current = current -> next;
+    }
+    
+}
+
+/**
+ finds a data element and returns it inside of our list
+ if it is not in our list this function will return NULL
+ */
+
+int* listFind(struct list* mylist, int *data, int (*compare) (void*, void*) ){
+    struct node* current = mylist-> head;
+    
+    if(current == NULL){
+        return NULL;
+    }
+    
+    while(current != NULL){
+        
+        if(compare(data, &current -> data) == 0){
+            
+            
+            break;
+        }
+        
+        
+        current = current-> next;
+    }
+    
+    if(current == NULL){
+        
+        
+        
+        return NULL;
+    }
+    
+    
+    
+    
+    return &current -> data;
+    
+    
+    
+}
+
+// deletes a Node inside of our list
+void *deleteNode(struct list *mylist, void *data, int (*compare)(void *, void *)){
+    
+    struct node* current = mylist -> head, *prev = NULL;
+    
+    while(current != NULL){
+       
+        
+        if(compare(data, &current-> data) == 0 ){
+            
+            // this is if case head should get deleted
+            if(prev==NULL){
+                mylist-> head = current-> next;
+                
+                free(current);
+            }else{
+                
+                prev -> next = current -> next;
+                
+                free(current);
+                
+            }
+            
+            return data;
+            
+          
+        }
+        
+        
+        prev = current;
+        current = current -> next;
+    }
+ 
+    
+    return NULL;
+    
+    
+    
+}
+    
+    
+    
+    
+
+
+
+
+
+
+
 
