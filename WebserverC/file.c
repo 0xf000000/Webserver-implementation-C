@@ -18,7 +18,8 @@
 struct file_data* loadFile(char *filename){
     char *buffer, *p;
     struct stat buf;
-    int bytes_remaining, bytes_read, total_bytes = 0;
+    int bytes_read, total_bytes = 0;
+    long long bytes_remaining;
     // get the File Size
     if(stat(filename, &buf) ==-1){
         

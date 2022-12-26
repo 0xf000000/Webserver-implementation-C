@@ -20,13 +20,6 @@
 
 
 int main(int argc, const char * argv[]) {
-   struct list *mylist =  createList();
-    
-  
-    
-    int lengthOfList = getListTail(mylist) ;
-    
-    printf(" this is the listlenght %i ",lengthOfList);
     
     struct sockaddr_storage their_addr;
     int newfd;

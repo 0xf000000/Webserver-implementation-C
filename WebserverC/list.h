@@ -9,7 +9,7 @@
 #define list_h
 
 struct node{
-    int data;
+    void* data;
     struct node *next;
 };
 
@@ -21,12 +21,13 @@ struct list{
 
 extern int Listlength(struct list *List);
 extern struct list* createList(void);
-extern void Push (struct list *headRef, int data);
-extern void appendNode(struct list *HEAD, int data);
-extern int getListHead(struct list *list);
-extern int getListTail(struct list *list);
-extern void foreachNode(struct list* list, void (*f)(int,void*), void *args);
+extern void Push (struct list *headRef, void* data);
+extern void appendNode(struct list *HEAD, void* data);
+extern void* getListHead(struct list *list);
+extern void* getListTail(struct list *list);
+extern void foreachNode(struct list* list, void (*f)(void*,void*), void *args);
 extern void destroyList(struct list *mylist);
 extern void freeArray(int** array);
 extern void *deleteNode(struct list *mylist, void *data, int (*cmpfn)(void *, void *));
+extern void* listFind(struct list* mylist, void *data, int (*compare) (void*, void*));
 #endif /* list_h */

@@ -29,7 +29,7 @@ struct list* createList(void){
 /*
  when we have a list struct it makes the programming of the linked list a bit easier cause we dont have to deal with pointer references anymore
  */
-void Push (struct list* mylist , int data) {
+void Push (struct list* mylist , void* data) {
     struct node* newNode = malloc(sizeof(struct node));
     
     if(newNode == NULL){
@@ -47,7 +47,7 @@ void Push (struct list* mylist , int data) {
 /*
  appending a node to the end of our list
  */
-void appendNode(struct list *list, int data){
+void appendNode(struct list *list, void* data){
     
     
     
@@ -110,13 +110,13 @@ int Listlength(struct list *List){
 }
 
 // returns the data of our first element in the list
-int getListHead(struct list *list){
+void* getListHead(struct list *list){
     
     struct node* head = list -> head;
     
     // if the head is null
     if(head == NULL ){
-        return -1;
+        return NULL;
     }
     
     return head -> data;
@@ -126,13 +126,13 @@ int getListHead(struct list *list){
 
 // returns the last element in our list
 
-int getListTail(struct list *list){
+void* getListTail(struct list *list){
     
     struct node* current = list -> head;
     
     
     if(current == NULL ){
-        return -1;
+        return NULL;
     }else{
         
         
@@ -147,14 +147,14 @@ int getListTail(struct list *list){
 
 
 
-int** listToArray(struct list* mylist ){
+void** listToArray(struct list* mylist ){
    
     if(mylist -> head == NULL){
         return 0;
     }
     
     // allocate a array for the size of your list
-    int** a = malloc(Listlength(mylist) * sizeof(int));
+    void** a = malloc(Listlength(mylist) * sizeof(int));
     
     
     struct node* current  = mylist -> head;
@@ -162,12 +162,12 @@ int** listToArray(struct list* mylist ){
     for(i = 0; current != NULL; i ++,current = current-> next ){
         
         
-        *a[i] = current -> data;
+        a[i] = current -> data;
         
     }
     
     
-    *a[i] = 0;
+    a[i] = NULL;
     
     
     
@@ -204,7 +204,7 @@ void destroyList(struct list *mylist){
  TODO: needs to be changed so it takes a void pointer
  */
 
-void foreachNode(struct list* list, void (*f)(int,void*), void *args){
+void foreachNode(struct list* list, void (*f)(void*,void*), void *args){
     
     struct node* current = list -> head;
     
@@ -222,7 +222,7 @@ void foreachNode(struct list* list, void (*f)(int,void*), void *args){
  if it is not in our list this function will return NULL
  */
 
-int* listFind(struct list* mylist, int *data, int (*compare) (void*, void*) ){
+void* listFind(struct list* mylist, void *data, int (*compare) (void*, void*) ){
     struct node* current = mylist-> head;
     
     if(current == NULL){
@@ -248,13 +248,7 @@ int* listFind(struct list* mylist, int *data, int (*compare) (void*, void*) ){
         return NULL;
     }
     
-    
-    
-    
-    return &current -> data;
-    
-    
-    
+    return current -> data;
 }
 
 // deletes a Node inside of our list
@@ -285,7 +279,6 @@ void *deleteNode(struct list *mylist, void *data, int (*compare)(void *, void *)
           
         }
         
-        
         prev = current;
         current = current -> next;
     }
@@ -296,15 +289,3 @@ void *deleteNode(struct list *mylist, void *data, int (*compare)(void *, void *)
     
     
 }
-    
-    
-    
-    
-
-
-
-
-
-
-
-
