@@ -14,6 +14,7 @@
 #include "net.h"
 #include "file.h"
 #include "list.h"
+#include "table.c"
 
 // implement a parameter handler here or a config file to change this
 #define PORT "8080"
@@ -21,6 +22,8 @@
 
 int main(int argc, const char * argv[]) {
     
+    
+    struct list* mylist = createList();
     struct sockaddr_storage their_addr;
     int newfd;
     char InetAdress[INET6_ADDRSTRLEN];

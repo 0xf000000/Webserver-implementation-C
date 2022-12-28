@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3557F565295B412E00BE565E /* table.c in Sources */ = {isa = PBXBuildFile; fileRef = 3557F564295B412E00BE565E /* table.c */; };
 		3570CAF1295121BF00A78963 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAF0295121BF00A78963 /* main.c */; };
 		3570CAF9295121E700A78963 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAF8295121E700A78963 /* net.c */; };
 		3570CAFC2951223700A78963 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAFB2951223700A78963 /* file.c */; };
@@ -27,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3557F563295B412E00BE565E /* table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = table.h; sourceTree = "<group>"; };
+		3557F564295B412E00BE565E /* table.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = table.c; sourceTree = "<group>"; };
 		3570CAED295121BF00A78963 /* WebserverC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WebserverC; sourceTree = BUILT_PRODUCTS_DIR; };
 		3570CAF0295121BF00A78963 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3570CAF7295121E700A78963 /* net.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = net.h; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 				3570CAFE2951227600A78963 /* MIME.c */,
 				3570CB00295122A400A78963 /* list.h */,
 				3570CB01295122A400A78963 /* list.c */,
+				3557F563295B412E00BE565E /* table.h */,
+				3557F564295B412E00BE565E /* table.c */,
 			);
 			path = WebserverC;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3557F565295B412E00BE565E /* table.c in Sources */,
 				3570CB02295122A400A78963 /* list.c in Sources */,
 				3570CAF1295121BF00A78963 /* main.c in Sources */,
 				3570CAF9295121E700A78963 /* net.c in Sources */,
