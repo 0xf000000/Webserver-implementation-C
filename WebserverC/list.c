@@ -47,9 +47,9 @@ void Push (struct list* mylist , void* data) {
 /*
  appending a node to the end of our list
  */
-void appendNode(struct list *list, void* data){
+void* appendNode(struct list *list, void* data){
     
-    
+    if(data == NULL || list == NULL ) return NULL;
     
     struct node *current = list -> head;
     struct node *newNode = malloc(sizeof(struct node));
@@ -61,7 +61,7 @@ void appendNode(struct list *list, void* data){
     // special case if the first head pointer is NULL
     if(current == NULL ){
         Push(list, data);
-        return;
+        return data;
     }
     
     else{
@@ -73,10 +73,11 @@ void appendNode(struct list *list, void* data){
         
         current -> next = newNode;
         
-       
+        return data;
         
     }
     // returns the first data that got inserted
+   
     
 }
 

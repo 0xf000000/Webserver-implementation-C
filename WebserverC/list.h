@@ -22,7 +22,7 @@ struct list{
 extern int Listlength(struct list *List);
 extern struct list* createList(void);
 extern void Push (struct list *headRef, void* data);
-extern void appendNode(struct list *HEAD, void* data);
+extern void* appendNode(struct list *HEAD, void* data);
 extern void* getListHead(struct list *list);
 extern void* getListTail(struct list *list);
 extern void foreachNode(struct list* list, void (*f)(void*,void*), void *args);
