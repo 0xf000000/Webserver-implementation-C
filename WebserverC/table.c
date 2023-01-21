@@ -216,3 +216,31 @@ void* hashtableDeleteBIN(struct hashtable* table, void* key, int size){
 }
 
 
+void hashtableForEach(struct hashtable* table, void (*f) (void *, void *), void *arg){
+    
+    struct foreach_callback payload;
+    
+    
+    payload.f = f;
+    payload.arg = arg;
+    
+    
+    for (int i = 0; table -> size < i; i++ ){
+        struct list* List = &table->bucket[i];
+    
+        foreachNode(List, payload.f, payload.arg);
+    }
+}
+
+/**
+ callback für die foreach function 
+ */
+void foreach_callback(void *vent , void *vpayload){
+    
+    struct TableEntry* tEntry = vent;
+    struct foreach_callback *payload = vpayload;
+    
+    payload->f(tEntry->data, payload->arg);
+}
+    
+

@@ -18,13 +18,63 @@
 
 // implement a parameter handler here or a config file to change this
 #define PORT "8080"
+#define SERVER "Server: John/0.01"
+
+ /*
+  * Send an HTTP response
+  *
+  * header:       "HTTP/1.1 404 NOT FOUND" or "HTTP/1.1 200 OK", etc.
+  * content_type: "text/plain", etc.
+  * body:         the data to send.
+  *
+  * Return the value from the send() function.
+  
+  
+  "HTTP/1.1 200 OK\n"
+  "Date: Thu, 19 Feb 2009 12:27:04 GMT\n"
+  "Server: Apache/2.2.3\n"
+  "Last-Modified: Wed, 18 Jun 2003 16:05:58 GMT\n"
+  "ETag: \"56d-9989200-1132c580\"\n"
+  "Content-Type: text/html\n"
+  "Content-Length: 15\n"
+  "Accept-Ranges: bytes\n"
+  "Connection: close\n"
+  "\n"
+  "sdfkjsdnbfkjbsf";
+  */
+ 
+int sendResponse(int fd, char *header, char *contend_type, void *body, int contentLength){
+    const int maxResponseSize = 262144;
+    char response[maxResponseSize];
+    
+    
+    //sprintf(response, "%s\n",header);
+    time_t rawtime;
+    struct tm* info;
+    time(&rawtime);
+    info = localtime(&rawtime);
+    char *date = asctime(&rawtime);
+    
+    sprintf(response, "%s\n Date: %s\n %s\n  Conntent-Type: %s\n ",header,date, SERVER,contend_type);
+    
+    return 0;
+}
+
+void handleHttpRequest(int fd){
+    
+    
+    
+    
+    
+    
+}
 
 
 int main(int argc, const char * argv[]) {
     
     
     
-    struct list* mylist = createList();
+    
     struct sockaddr_storage their_addr;
     int newfd;
     char InetAdress[INET6_ADDRSTRLEN];

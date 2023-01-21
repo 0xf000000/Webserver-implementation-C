@@ -17,6 +17,7 @@ struct hashtable{
     struct list* bucket;
     int (*hashf)(void *data, int dataSize, int bucketCount);
 };
+extern void hashtableForEach(struct hashtable* ht, void (*f) (void *, void *), void *arg); 
 extern int hashfunction(void *data, int dataSize,int bucketCount);
 extern void* putHashtableBin( struct hashtable* table, void* key,int keysize, void* data);
 extern void* putIntoTable(struct hashtable* table, void* data, char *key);
