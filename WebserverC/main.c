@@ -20,7 +20,7 @@
 #define PORT "8080"
 #define SERVER "Server: John/0.01"
 #define SERVER_FILES "/Users/leon/Code/WebserverC/WebserverC/serverfiles/"
-#define SERVER_ROOT "./serverRoot"
+#define SERVER_ROOT "/Users/leon/Code/WebserverC/WebserverC/serverroot"
 
  /*
   * Send an HTTP response
@@ -32,7 +32,7 @@
   * body:         the data to send.
   *
   * Return the value from the send() function.
-  really important to leave 1 or 2 spaces in the http function 
+  really important to leave 1 or 2 spaces in the http function
   
   
   */
@@ -68,14 +68,7 @@ int sendResponse(int fd, char *header, char *contend_type, void *body, int conte
     return rv;
 }
 
-void handleHttpRequest(int fd){
-    
-    
-    
-    
-    
-    
-}
+
 
 /*
  sends a 404 response to the client
@@ -105,6 +98,54 @@ void resp_404(int fd){
     sendResponse(fd, "HTTP/1.1 404 NOT FOUND ", mime_type, filedata->data, filedata->size);
     
     file_free(filedata);
+}
+
+
+void handleHttpRequest(int fd){
+    
+    const int requestBufferSize = 6536;
+    char request[requestBufferSize];
+    char method[20];
+    char path[200];
+    // read request
+    
+    int bytes_recvd = recv(fd, request, requestBufferSize -1, 0);
+    
+    if(bytes_recvd  < 0){
+        perror("recv handleHttpRequest function something wrong with the request");
+        return;
+    }
+    
+    // get the method and the path
+    sscanf(request, "%s %s", method, path);
+    
+    // handle GET endpoint
+    if(strcmp(method, "GET") == 0 ){
+        
+        char filepath[4000];
+        
+        sprintf(filepath, "%s%s", SERVER_ROOT, path);
+        
+        printf("request is at %s", filepath);
+        struct file_data* file;
+        
+        file = loadFile(filepath);
+        
+        if(file == NULL ){
+            resp_404(fd);
+            return;
+        }
+        char *mimetype;
+        mimetype  =  getMIMEtype(filepath);
+        
+        sendResponse(fd, "HTTP/1.1 200 OK", mimetype, file->data, file->size);
+        
+        file_free(file);
+        
+        
+    
+    }
+    
 }
 
 
@@ -146,7 +187,7 @@ int main(int argc, const char * argv[]) {
         
         printf("server: got connection from %s\n",InetAdress);
         
-       
+        handleHttpRequest(newfd);
         
         printf("response Sended");
         //handle_http_request()
