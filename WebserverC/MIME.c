@@ -12,7 +12,7 @@
 
 
 char *strlower(char *s){
-    
+  
     for(char *p = s; *p =! '\0';p++){
         *p = tolower(*p);
     }
@@ -23,7 +23,7 @@ char *strlower(char *s){
  should return a memetype for the requested file
  */
 
-char *mime_type_get(char *filename){
+char* getMIMEtype(char *filename){
     char *ext = strrchr(filename,'.');
     
     if(ext == NULL){
@@ -32,7 +32,7 @@ char *mime_type_get(char *filename){
     
     ext++;
     
-    strlower(ext);
+    //strlower(ext);
         
     //TODO: we can acctually implement this with a map will do this later we need O(1)
     

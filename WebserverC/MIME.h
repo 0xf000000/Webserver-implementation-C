@@ -5,14 +5,11 @@
 //
 //
 
-#ifndef File_h
-#define File_h
+#ifndef MIME_H
+#define MIME_H
 
-struct file_data{
-    int size;
-    void *data;
-};
 
+extern char*  getMIMEtype(char *filename);
 extern struct file_data* loadFile(char *filename);
 extern void file_free(struct file_data*);
 
