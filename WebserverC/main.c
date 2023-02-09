@@ -18,10 +18,13 @@
 #include "MIME.h"
 // implement a parameter handler here or a config file to change this
 #define PORT "8080"
-#define SERVER "Server: John/0.01"
+#define SERVER "John/0.01"
 #define SERVER_FILES "/Users/leon/Code/WebserverC/WebserverC/serverfiles/"
 #define SERVER_ROOT "/Users/leon/Code/WebserverC/WebserverC/serverroot"
-
+#define STATUSCODE200 "HTTP/1.1 200 OK"
+#define STATUSCODE404 "HTTP/1.1 404 NOT FOUND"
+#define RANDOMINTEGERVALUE 20
+#define PLANEMIMETYPE "text/plain"
  /*
   * Send an HTTP response
   *
@@ -53,12 +56,11 @@ int sendResponse(int fd, char *header, char *contend_type, void *body, int conte
             "Content-Type: %s\n"
             "Date: %s\n"
             "Server: %s\n"
-            "Content-Length: %d\n\n\n"
-            " %s\n"
-            ,header,contend_type,SERVER,date , contentLength, body);
+            "Content-Length: %d\n\n"
+            "%s\n "
+            ,header,contend_type,date,SERVER, contentLength, body);
     
-   
-    
+    printf("here is the current response %s ",response);
     
     int rv = send(fd, response, strlen(response),0);
     
@@ -66,6 +68,26 @@ int sendResponse(int fd, char *header, char *contend_type, void *body, int conte
         perror("send() function ");
     }
     return rv;
+}
+
+int generateRandomNumber(void){
+    srand(time(NULL));
+    return rand() % RANDOMINTEGERVALUE;
+}
+
+void get_d20(int socket){
+    
+    // generate a random number between 1 and 20
+    
+    int randomInteger = generateRandomNumber();
+    char numberRange[] = {'0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'};
+    char integerToSendBack = numberRange[randomInteger];
+    char* integerToSendPtr = &integerToSendBack;
+    
+    
+    sendResponse(socket, STATUSCODE200, PLANEMIMETYPE,(char*) integerToSendPtr,  strlen(integerToSendPtr));
+    // sends the number back to the requester as text/plain
+    
 }
 
 
@@ -95,10 +117,11 @@ void resp_404(int fd){
     mime_type = getMIMEtype(filepath);
     
     
-    sendResponse(fd, "HTTP/1.1 404 NOT FOUND ", mime_type, filedata->data, filedata->size);
+    sendResponse(fd, STATUSCODE404, mime_type, filedata->data, filedata->size);
     
     file_free(filedata);
 }
+
 
 
 void handleHttpRequest(int fd){
@@ -122,6 +145,12 @@ void handleHttpRequest(int fd){
     // handle GET endpoint
     if(strcmp(method, "GET") == 0 ){
         
+        if(strcmp(path, "/d20") == 0 ){
+           
+            get_d20(fd);
+            return;
+        }
+        
         char filepath[4000];
         
         sprintf(filepath, "%s%s", SERVER_ROOT, path);
@@ -138,21 +167,18 @@ void handleHttpRequest(int fd){
         char *mimetype;
         mimetype  =  getMIMEtype(filepath);
         
-        sendResponse(fd, "HTTP/1.1 200 OK", mimetype, file->data, file->size);
+        sendResponse(fd, STATUSCODE200 , mimetype, file->data, file->size);
         
         file_free(file);
-        
-        
-    
     }
     
+    if(strcmp(method, "POST" ) == 0 ){
+        //TODO: keine ahnung wie man ne POST request handelt database Connectivity?
+    }
 }
 
 
 int main(int argc, const char * argv[]) {
-    
-    
-    
     
     struct sockaddr_storage their_addr;
     int newfd;
@@ -171,7 +197,6 @@ int main(int argc, const char * argv[]) {
     
     while(1){
         socklen_t sin_size = sizeof their_addr;
-        
         // waits for a new connection ...
         newfd = accept(listenfd,(struct sockaddr *) &their_addr, &sin_size);
         
@@ -190,7 +215,6 @@ int main(int argc, const char * argv[]) {
         handleHttpRequest(newfd);
         
         printf("response Sended");
-        //handle_http_request()
         
         // newfd gets passed on every time to handle our connection with the client and gets closed after the parsing of our request
         close(newfd);

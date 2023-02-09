@@ -80,7 +80,8 @@ struct file_data* loadFile(char *filename){
  */
 void file_free(struct file_data* filedata){
     
-    free(filedata);
     free(filedata->data);
+    free(filedata);
+    
 
 }
