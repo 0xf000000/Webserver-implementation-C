@@ -72,20 +72,30 @@ int sendResponse(int fd, char *header, char *contend_type, void *body, int conte
 
 int generateRandomNumber(void){
     srand(time(NULL));
-    return rand() % RANDOMINTEGERVALUE;
+    return rand() % RANDOMINTEGERVALUE -1;
 }
 
 void get_d20(int socket){
-    
+
     // generate a random number between 1 and 20
-    
+    char numberRange[][2] = {'0','1','2','3','4','5','6','7','8','9',"10","11","12","13","14","15","16","17","18","19","20"};
     int randomInteger = generateRandomNumber();
-    char numberRange[] = {'0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'};
-    char integerToSendBack = numberRange[randomInteger];
-    char* integerToSendPtr = &integerToSendBack;
+   
+    // for one digit one char integer
+    if(randomInteger < 10 ){
+        char SingleInteger;
+        SingleInteger = numberRange[randomInteger][0];
+        sendResponse(socket, STATUSCODE200, PLANEMIMETYPE,&SingleInteger , 1);
+        return;
+    }
     
+    // Send to digit response back
+    char integerToSendBack[2];
+    for(int i =0; i < sizeof numberRange[randomInteger]; i++ ){
+        integerToSendBack[i] = numberRange[randomInteger][i];
+    }
     
-    sendResponse(socket, STATUSCODE200, PLANEMIMETYPE,(char*) integerToSendPtr,  strlen(integerToSendPtr));
+    sendResponse(socket, STATUSCODE200, PLANEMIMETYPE,&integerToSendBack , 2);
     // sends the number back to the requester as text/plain
     
 }
