@@ -13,6 +13,7 @@
 		3570CAFC2951223700A78963 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAFB2951223700A78963 /* file.c */; };
 		3570CAFF2951227600A78963 /* MIME.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CAFE2951227600A78963 /* MIME.c */; };
 		3570CB02295122A400A78963 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 3570CB01295122A400A78963 /* list.c */; };
+		35DD77DE29A435A300439F78 /* cache.c in Sources */ = {isa = PBXBuildFile; fileRef = 35DD77DD29A435A300439F78 /* cache.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		3570CAFE2951227600A78963 /* MIME.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MIME.c; sourceTree = "<group>"; };
 		3570CB00295122A400A78963 /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		3570CB01295122A400A78963 /* list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		35DD77DC29A435A300439F78 /* cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cache.h; sourceTree = "<group>"; };
+		35DD77DD29A435A300439F78 /* cache.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cache.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				3570CAFA2951223700A78963 /* file.h */,
+				35DD77DC29A435A300439F78 /* cache.h */,
+				35DD77DD29A435A300439F78 /* cache.c */,
 				3570CAFB2951223700A78963 /* file.c */,
 				3570CAF0295121BF00A78963 /* main.c */,
 				3570CAF7295121E700A78963 /* net.h */,
@@ -148,6 +153,7 @@
 				3570CB02295122A400A78963 /* list.c in Sources */,
 				3570CAF1295121BF00A78963 /* main.c in Sources */,
 				3570CAF9295121E700A78963 /* net.c in Sources */,
+				35DD77DE29A435A300439F78 /* cache.c in Sources */,
 				3570CAFC2951223700A78963 /* file.c in Sources */,
 				3570CAFF2951227600A78963 /* MIME.c in Sources */,
 			);
