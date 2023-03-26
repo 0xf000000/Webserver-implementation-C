@@ -28,10 +28,10 @@ struct cache{
 };
 
 extern struct cacheEntry *alloc_Entry(char *path, char *contentType, void *content,  int contentLength); 
-
-
-
-
-
+extern void  free_entry (struct cacheEntry *entry);
+extern struct cache* cacheCreate(int max_size, int hashSize);
+extern void cache_free(struct cache *cache);
+extern void cachePut(struct cache *cache, char *path, char *content_type, void *content, int content_length);
+extern struct cacheEntry *cache_get(struct cache *cache, char *path);
 
 #endif /* cache_h */
