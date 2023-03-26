@@ -11,6 +11,17 @@
 #include "cache.h"
 #include "file.h"
 
+struct cacheEntry *dllist_remove_tail(struct cache *cache){
+    struct cacheEntry *oldtail = cache->tail;
+
+        cache->tail = oldtail->prev;
+        cache->tail->next = NULL;
+
+        cache->curSize--;
+
+        return oldtail;
+}
+
 
 
 // should allocate a cache entry
@@ -47,6 +58,7 @@ struct cache *cacheCreate(int max_size, int hashsize)
     int finalHashsize = hashsize;
     
     cache->maxSize = max_size;
+    cache->curSize = 0;
     
     if(finalHashsize <= 1 ){ finalHashsize = 5; }
     
@@ -71,11 +83,36 @@ void cache_free(struct cache *cache){
     free(cache);
 }
 
+void  free_entry(struct cacheEntry *entry)
+{
+    
+    if(entry == NULL){
+        return;
+    }
+    
+    free(entry->content);
+    free(entry->content_type);
+    free(entry->path);
+    free(entry);
+   
+}
+
 
 void cachePut(struct cache *cache, char *path, char *content_type, void *content, int content_length){
+    
+    if(cache->curSize +1  > cache->maxSize){
+        printf("ERROR: the cache has no space for another entry");
+        return;
+    }
     
     struct cacheEntry* entry = alloc_Entry(path, content_type, content, content_length);
     
     InsertHeadDoubleLinkedList(cache, entry);
     
+    putIntoTable(cache->index, entry, path);
+    cache->curSize++;
+    
+   
 }
+
+
