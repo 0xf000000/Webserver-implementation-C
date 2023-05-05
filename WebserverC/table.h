@@ -10,6 +10,14 @@
 /**
  cool thing on this hashtable implementation is that you can choose your own hashfunction implementation :-)
  */
+
+struct TableEntry{
+    void *key;
+    int keySize;
+    int hashedKey;
+    void* data;
+};
+
 struct hashtable{
     int size;
     int num_entries;
@@ -17,6 +25,9 @@ struct hashtable{
     struct list* bucket;
     int (*hashf)(void *data, int dataSize, int bucketCount);
 };
+
+
+extern void* hashtablGETbinary( struct hashtable* table, void* key, int keylength);
 struct hashtable* createTable(int size , int (*HASHFUNCTION) (void*,int , int ));
 extern void hashtableForEach(struct hashtable* ht, void (*f) (void *, void *), void *arg); 
 extern int hashfunction(void *data, int dataSize,int bucketCount);
@@ -24,9 +35,9 @@ extern void* putHashtableBin( struct hashtable* table, void* key,int keysize, vo
 extern void* putIntoTable(struct hashtable* table, void* data, char *key);
 extern void hashentryFree(void *ent, void *arg);
 extern void hashtableDestroy(struct hashtable* table);
-extern void* hashtablGETbinary( struct hashtable* table, void* key, int keylength);
 extern int tablecompare(void *a, void *b);
-extern void addEntrycount(struct hashtable* ht, int d  );
+extern void addEntrycount(struct hashtable* ht, int d);
 extern void * hashtableDelete(struct hashtable *table, char* key);
+extern void* hashtableGET(struct hashtable* table, char* key);
 extern void* hashtableDeleteBIN(struct hashtable* table, void* key, int size);
 #endif /* table_h */

@@ -225,7 +225,7 @@ void foreachNode(struct list* list, void (*f)(void*,void*), void *args){
 
 void* listFind(struct list* mylist, void *data, int (*compare) (void*, void*) ){
     struct node* current = mylist-> head;
-    
+    printf("LOG (DEBUG): Listfind Function gets called");
     if(current == NULL){
         return NULL;
     }

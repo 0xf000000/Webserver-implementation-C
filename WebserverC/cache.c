@@ -99,11 +99,15 @@ void  free_entry(struct cacheEntry *entry)
 
 
 void cachePut(struct cache *cache, char *path, char *content_type, void *content, int content_length){
-    
-    if(cache->curSize +1  > cache->maxSize){
-        printf("ERROR: the cache has no space for another entry");
+    if(cache == NULL){
+        printf(" (-) ERROR: cache struct ist NULL");
         return;
     }
+    if(cache->curSize +1  > cache->maxSize){
+        printf(" (-) ERROR: the cache has no space for another entry");
+        return;
+    }
+    
     
     struct cacheEntry* entry = alloc_Entry(path, content_type, content, content_length);
     
@@ -111,8 +115,30 @@ void cachePut(struct cache *cache, char *path, char *content_type, void *content
     
     putIntoTable(cache->index, entry, path);
     cache->curSize++;
-    
-   
 }
 
 
+
+// what the fuck is that?
+struct cacheEntry* cacheGet(struct cache* cache, char* path){
+    
+    
+    // always checkups for nullptr
+    if( cache == NULL){
+        return NULL;
+    }
+
+    struct cacheEntry* entry = hashtableGET(cache->index, path);
+    
+    if(entry == NULL){
+        return NULL;
+    }
+    
+    
+    
+    //DEBUG
+    printf("LOG: an Entry will be returned that exists"); 
+    
+    
+    return entry;
+}

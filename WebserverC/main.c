@@ -16,6 +16,7 @@
 #include "list.h"
 #include "table.h"
 #include "MIME.h"
+#include "cache.h"
 // implement a parameter handler here or a config file to change this
 #define PORT "8080"
 #define SERVER "John/0.01"
@@ -134,7 +135,7 @@ void resp_404(int fd){
 
 
 
-void handleHttpRequest(int fd){
+void handleHttpRequest(int fd, struct cache* cache ){
     
     const int requestBufferSize = 6536;
     char request[requestBufferSize];
@@ -155,27 +156,44 @@ void handleHttpRequest(int fd){
     // handle GET endpoint
     if(strcmp(method, "GET") == 0 ){
         
+        
         if(strcmp(path, "/d20") == 0 ){
            
             get_d20(fd);
             return;
         }
         
+        
+       struct cacheEntry* entry =  cacheGet(cache, path);
+        
+        if(entry != NULL){
+            
+            sendResponse(fd, STATUSCODE200, entry->content_type, entry->content, entry->content_length);
+            return;
+        }
+        
+        
+        
         char filepath[4000];
         
         sprintf(filepath, "%s%s", SERVER_ROOT, path);
         
-        printf("request is at %s", filepath);
-        struct file_data* file;
         
-        file = loadFile(filepath);
+        
+        
+        // file is not in cache and get loaded from Disk
+        
+        struct file_data*  file = loadFile(filepath);
         
         if(file == NULL ){
             resp_404(fd);
             return;
         }
-        char *mimetype;
-        mimetype  =  getMIMEtype(filepath);
+       
+        
+        
+        char *mimetype = getMIMEtype(filepath);
+        cachePut(cache, path, mimetype, file->data, file->size);
         
         sendResponse(fd, STATUSCODE200 , mimetype, file->data, file->size);
         
@@ -204,6 +222,7 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("webserver: waiting for connection on port %s ..\n", PORT);
+    struct cache* cache = cacheCreate(6, 6);
     
     while(1){
         socklen_t sin_size = sizeof their_addr;
@@ -222,7 +241,7 @@ int main(int argc, const char * argv[]) {
         
         printf("server: got connection from %s\n",InetAdress);
         
-        handleHttpRequest(newfd);
+        handleHttpRequest(newfd, cache);
         
         printf("response Sended");
         

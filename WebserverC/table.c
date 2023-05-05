@@ -15,12 +15,8 @@
 #define DEFAULTSIZE 128
 
 
-struct TableEntry{
-    void *key;
-    int keySize;
-    int hashedKey;
-    void* data;
-};
+// Datenstruktur die den Tisch eintrag hält
+
 
 struct foreach_callback{
     void *arg;
@@ -62,7 +58,7 @@ struct hashtable* createTable(int size , int (*HASHFUNCTION) (void*,int , int ))
     
     struct hashtable* newTable =  malloc(sizeof(*newTable));
     if(newTable == NULL){
-        
+
         return NULL;
     }
     
@@ -138,20 +134,11 @@ void hashtableDestroy(struct hashtable* table){
     
 }
 
-void* hashtableGET(struct hashtable* table, char* key){
-    // quick nullptr check
-    if(table == NULL){ return NULL;}
+void* hashtableGETbinary( struct hashtable* table, void* key, int keylength){
     
-    
-    return hashtablGETbinary(table, key, strlen(key));
-    
-    
-}
-
-
-void* hashtablGETbinary( struct hashtable* table, void* key, int keylength){
-    
-    int index = table->hashf(key,keylength, table->size);
+    // here i think we have to transfer the funktionpointer
+    int (*hashf)(void *data, int dataSize, int bucketCount) = table->hashf;
+    int index = table->hashf(key, keylength, table->size);
     
     struct list* mylist = &table->bucket[index];
     
@@ -161,11 +148,33 @@ void* hashtablGETbinary( struct hashtable* table, void* key, int keylength){
     
     struct TableEntry* ent = listFind(mylist, &cmpent, tablecompare);
     
-    if(ent == NULL) { return NULL; }
+    if(ent == NULL) {
+        printf("LOG (DEBUG): entry is NULL");
+        
+        return NULL; }
     
     return ent->data;
     
+    
 }
+
+
+
+
+
+void* hashtableGET(struct hashtable* table, char* key){
+    // quick nullptr check
+    if(table == NULL || key == NULL ){ return NULL;}
+    
+    
+    void* value = hashtableGETbinary(table, key, strlen(key));
+    
+    return value;
+    
+    
+}
+
+
 
 int tablecompare(void *a, void *b){
     struct TableEntry *entA = a, *entB = b;
