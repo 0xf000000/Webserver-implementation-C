@@ -93,8 +93,9 @@ void* putIntoTable(struct hashtable* table, void* data, char *key){
 void* putHashtableBin( struct hashtable* table, void* key,int keysize, void* data){
     
     int index = table->hashf(key, keysize, table->size);
-    struct list* list = &table->bucket[index];
     
+    printf("LOG: putHashtableBin() index that got put %i", index);
+    struct list* list = &table->bucket[index];
     struct TableEntry* entry = malloc(sizeof(struct TableEntry* ));
     
     entry->key = key;
@@ -140,6 +141,8 @@ void* hashtableGETbinary( struct hashtable* table, void* key, int keylength){
     int (*hashf)(void *data, int dataSize, int bucketCount) = table->hashf;
     int index = table->hashf(key, keylength, table->size);
     
+    
+    printf("LOG: this is the current Index my hashfunction provides %i", index);
     struct list* mylist = &table->bucket[index];
     
     struct TableEntry cmpent;
@@ -181,6 +184,14 @@ int tablecompare(void *a, void *b){
     
     
     int Sizedifference = entB->keySize - entA->keySize;
+    printf("\n LOG: tablecompare() the size differens is %i\n", Sizedifference);
+    
+    
+    if( strcmp(entB->key, entA->key) == 0 ){
+        return 0;
+    }
+    
+    
     
     if(Sizedifference){
         return Sizedifference;

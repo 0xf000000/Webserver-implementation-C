@@ -19,7 +19,7 @@
 
 struct list* createList(void){
     
-    struct list* list = calloc(1 , sizeof(struct list));
+    struct list* list = malloc(sizeof(struct list));
 
     
     return list;
@@ -232,7 +232,10 @@ void* listFind(struct list* mylist, void *data, int (*compare) (void*, void*) ){
     
     while(current != NULL){
         
-        if(compare(data, &current -> data) == 0){
+        
+        // aaaand here is the problem
+        
+        if(compare(data, current->data) == 0){
             
             
             break;

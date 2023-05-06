@@ -19,13 +19,14 @@
 #include "cache.h"
 // implement a parameter handler here or a config file to change this
 #define PORT "8080"
-#define SERVER "John/0.01"
+#define SERVER "Adam/0.01"
 #define SERVER_FILES "/Users/leon/Code/WebserverC/WebserverC/serverfiles/"
 #define SERVER_ROOT "/Users/leon/Code/WebserverC/WebserverC/serverroot"
 #define STATUSCODE200 "HTTP/1.1 200 OK"
 #define STATUSCODE404 "HTTP/1.1 404 NOT FOUND"
 #define RANDOMINTEGERVALUE 20
 #define PLANEMIMETYPE "text/plain"
+
  /*
   * Send an HTTP response
   *
@@ -59,7 +60,7 @@ int sendResponse(int fd, char *header, char *contend_type, void *body, int conte
             "Server: %s\n"
             "Content-Length: %d\n\n"
             "%s\n "
-            ,header,contend_type,date,SERVER, contentLength, body);
+            ,header,contend_type,date,SERVER, contentLength, (char*) body);
     
     printf("here is the current response %s ",response);
     
@@ -140,13 +141,13 @@ void handleHttpRequest(int fd, struct cache* cache ){
     const int requestBufferSize = 6536;
     char request[requestBufferSize];
     char method[20];
-    char path[200];
+    char path[100];
     // read request
     
     int bytes_recvd = recv(fd, request, requestBufferSize -1, 0);
     
     if(bytes_recvd  < 0){
-        perror("recv handleHttpRequest function something wrong with the request");
+        perror("ERROR: (-) recv handleHttpRequest function something wrong with the request");
         return;
     }
     
@@ -166,6 +167,8 @@ void handleHttpRequest(int fd, struct cache* cache ){
         
        struct cacheEntry* entry =  cacheGet(cache, path);
         
+        
+        // wenn ein File im Cache gefunden wird, wird dies hier sofort geschickt.
         if(entry != NULL){
             
             sendResponse(fd, STATUSCODE200, entry->content_type, entry->content, entry->content_length);
@@ -211,7 +214,7 @@ int main(int argc, const char * argv[]) {
     struct sockaddr_storage their_addr;
     int newfd;
     char InetAdress[INET6_ADDRSTRLEN];
-    
+    struct cache* cache = cacheCreate(6, 6);
     // get a listening socket that is bounded to a Interface
     //listenfd will listen every time for a new connection
     int listenfd = get_socket(PORT);
@@ -222,7 +225,8 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("webserver: waiting for connection on port %s ..\n", PORT);
-    struct cache* cache = cacheCreate(6, 6);
+    
+    
     
     while(1){
         socklen_t sin_size = sizeof their_addr;
